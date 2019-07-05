@@ -1,0 +1,147 @@
+openapi: 3.0.0
+servers: 
+- url: http://localhost:8080
+  description: URL for development environment
+- url: http://production:8080
+  description: URL for production environment
+info:
+  description: This API exposes all the operations for creating and maintaing users
+  version: "1.0.0"
+  title: Users API
+  contact:
+    email: sureshinthenet@gmail.com
+tags:
+  - name: users
+    description: Retrieve, Add or Delete Users
+paths:
+  /users:
+    post:
+      tags:
+        - users
+      summary: Add a new user
+      operationId: addUser
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+        '405':
+          description: Invalid input
+      requestBody:
+        $ref: '#/components/requestBodies/User'
+    get:
+       tags:
+          - users
+       summary: Get all users
+       operationId: getUsers
+       responses:
+          '200':
+             description: Success Response
+             content:
+                 application/json:
+                    schema:
+                       $ref: '#/components/schemas/UserArray'      
+  '/users/{idNumber}':
+    get:
+      tags:
+        - users
+      summary: Find user by ID
+      description: Returns a single user
+      operationId: getUserById
+      parameters:
+        - name: idNumber
+          in: path
+          description: ID of user to return
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: User not found
+    delete:
+      tags:
+        - users
+      summary: Deletes a user
+      operationId: deleteUser
+      parameters:
+        - name: idNumber
+          in: path
+          description: Id of the user to delete
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: User not found
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        name:
+          type: string
+          example: John
+        surname:
+          type: string
+          example: Doe
+        idNumber:
+          type: integer
+          format: int32
+          example: 123456
+        gender:
+          type: string
+          description: Order Status
+          enum:
+            - Male
+            - Female
+          example: Male
+        married:
+          type: boolean
+          default: false
+      xml:
+        name: User
+    UserArray:
+            type: array
+            items:
+              $ref: '#/components/schemas/User'
+       
+  requestBodies:
+    User:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/User'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/User'
+      description: User object that needs to be added
+      required: true

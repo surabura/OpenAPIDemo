@@ -1,0 +1,44 @@
+openapi: 3.0.0
+info: 
+   title: "Suresh API Controller"
+   description: "API Controller to test how Open API 3.0 works with Spring Boot"
+   version: "1.0"
+servers:
+   - url: "http://localhost:8080"
+     description: "Local Server url"
+   - url: "http://production:8080"
+     description: "Production server url"
+     
+paths:
+   /details:
+      get:
+         tags:
+         - Get User Details
+         summary: Get Details response
+         description: Returns hard coded Details response back
+         responses:
+            '200':
+               description: Success status code
+               content:
+                  application/json:
+                     schema:
+                        $ref: '#/components/schemas/Details'
+           
+                        
+components:
+   schemas:
+      Details:
+         properties:
+            name:
+               type: string
+               example: Suresh
+            surname:
+               type: string
+               example: Kanagasabai
+            address:
+               type: string
+               example: Johannesburg
+         required:
+            - name
+            - surname
+            - address
