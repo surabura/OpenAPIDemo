@@ -46,7 +46,7 @@ paths:
                  application/json:
                     schema:
                        $ref: '#/components/schemas/UserArray'      
-  '/users/{idNumber}':
+  '/users/{id_number}':
     get:
       tags:
         - users
@@ -54,7 +54,7 @@ paths:
       description: Returns a single user
       operationId: getUserById
       parameters:
-        - name: idNumber
+        - name: id_number
           in: path
           description: ID of user to return
           required: true
