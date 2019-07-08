@@ -105,34 +105,43 @@ paths:
 components:
   schemas:
     User:
-      type: object
-      properties:
-        name:
-          type: string
-          example: John
-        surname:
-          type: string
-          example: Doe
-        idNumber:
-          type: integer
-          format: int32
-          example: 123456
-        gender:
-          type: string
-          description: Order Status
-          enum:
-            - Male
-            - Female
-          example: Male
-        married:
-          type: boolean
-          default: false
-      xml:
-        name: User
+       allOf:
+        - $ref: "#/components/schemas/BaseResponse"
+        - type: object
+          properties:
+           name:
+             type: string
+             example: John
+           surname:
+             type: string
+             example: Doe
+           idNumber:
+             type: integer
+             format: int32
+             example: 123456
+           gender:
+             type: string
+             description: Order Status
+             enum:
+               - Male
+               - Female
+             example: Male
+           married:
+             type: boolean
+             default: false
+          xml:
+           name: User
     UserArray:
             type: array
             items:
               $ref: '#/components/schemas/User'
+    BaseResponse:
+            type: object
+            properties:
+               message:
+                  type: string
+               code:
+                  type: integer              
        
   requestBodies:
     User:
